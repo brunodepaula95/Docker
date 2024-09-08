@@ -1,0 +1,75 @@
+Docker é um serviço de virtualização, ele permite que a gente crie nossa aplicação independente
+do ambiente em que a gente está desenvolvendo. Consegue fazer o deploy da aplicação contendo
+todas dependencias necessárias para ex. da aplicação. Ele pega nossa aplicação e coloca dentro 
+de um container totalmente independente dos outros processos, contendo somente as coisas necessárias.
+
+Docker dentro de um container não precisa ter um sistema operacional, ele utiliza o sistema operacional do 
+hospedeiro, só que ele não enxerga as outras operações que acontecem no computador, somente ali onde ele está rodando
+
+Cada container tem uma parte dos recursos da maquina, e separa a interface de rede e cada um tem sua variavel de sistema.
+
+Comandos Docker
+docker ps - Comando para saber quantos containers tem e quantos estão sendo executados na maquina
+docker run + "nome da imagem" para iniciar uma imagem
+docker ps -a Mostra todos os containers que já foram executados na maquina
+
+Quando você inicia o comando docker run, se ele não tiver nenhuma atividade dentro deste container ele 
+automaticamente se encerra.
+Você pode passar algo quando for iniciar como por ex:
+docker run -it ubuntu bash(Esse comando inicia o bash dentro do terminal do ubuntu, mantendo o container em aberto
+fazendo com que assim ele não se encerre.O it é de interativo, que permite interagir)
+
+docker stop + "id do container" faz com que você de um stop em todos os processos que estão sendo executados
+docker start + "id do container" você inicia novamente o mesmo container de antes.
+
+
+docker build -t +"nome da imagem:1.0 . " é utilizando para gerar imagens a partir do docker files
+Se você deixar o docker na raiz da pasta, basta apenas adicionar o ponto no final, caso não antes insira a pasta
+em que ele se encontra
+
+No momento que você for executar o container você precisa antes fazer um mapeamento, porque como ele roda separadamente
+da sua maquina, então no momento em que você colocar ele para rodar na porta 8080 ele não vai funcionar, porque você não mapeou
+até a porta 8080 do container, pois a porta 8080 da maquina é uma coisa e a do container é outra.
+Existe duas formas de mapear as portas uma delas é
+
+docker run -P "nome da imagem" dessa forma ele vai apontar para alguma porta aleatoria da maquina hospedeira.
+docker run -p 8080:8080 "nome da imagem" Dessa forma ele faz da porta 8080 para a porta 8080 do container
+
+Você precisa entrar no docker hub, criar sua conta depois você vai em Security, New Access token para gerar um token para que vcê
+consiga logar na sua maquina docker
+Para gerar a imagem e conseguir enviar para o docker hub você precisa gerar a imagem com o nome do seu usuario do docker hub
+docker build -t "nome de usuario"/"nome da imagem":1.0 . (o nome da imagem deve ser o mesmo do repositorio criado)
+
+docker push "nome de usuario"/"nome da imagem":1.0 sobe a imagem para o docker hub
+
+docker build --plataform linux/amd64 -t "nome de usuario"/"nome da imagem":1.0 .(Vai criar a imagem exatamente para essa arquitetura inserida
+no caso um linux)
+
+docker tag "nome de usuario"/"nome da imagem":1.0 "nome de usuario"/"nome da imagem":1.0-amd64 Nesse caso para não ter que fazer um override
+com esse comando você passa o nome primeiro da imagem local e em seguida o nome que você quer colocar.
+Depois de fazer o tag, passe novamente o push só que adicione no final o amd64 "nome de usuario"/"nome da imagem":1.0-amd64
+
+Segundo o chatgpt docker é:
+Docker é uma plataforma que facilita a criação, a distribuição e a execução de aplicativos em contêineres. Aqui está um resumo dos principais conceitos:
+
+Contêineres: São unidades leves e portáteis que incluem tudo o que um aplicativo precisa para rodar, como bibliotecas e dependências. Eles garantem que o aplicativo funcione de forma consistente em diferentes ambientes.
+
+Imagens: São os “templates” para criar contêineres. Contêm o sistema operacional, o software e as configurações necessárias. As imagens são imutáveis e podem ser versionadas e compartilhadas.
+
+Docker Engine: É o runtime que executa e gerencia os contêineres. Ele pode ser instalado em diferentes sistemas operacionais e é responsável por criar, iniciar e parar contêineres.
+
+Docker Hub: É um repositório online onde você pode armazenar e compartilhar imagens Docker. Também oferece imagens públicas e oficiais de várias aplicações e sistemas operacionais.
+
+Docker Compose: É uma ferramenta para definir e executar aplicativos multi-contêineres usando um arquivo de configuração YAML. Facilita o gerenciamento de ambientes complexos.
+
+Dockerfile: É um script que contém uma série de comandos para criar uma imagem Docker. Define o ambiente e as dependências necessárias para a aplicação.
+
+Portabilidade: Com Docker, você pode empacotar um aplicativo e suas dependências em um contêiner que pode ser executado em qualquer lugar onde Docker esteja instalado, seja no seu laptop, em um servidor ou na nuvem.
+
+Eficiência: Contêineres compartilham o mesmo kernel do sistema operacional, o que os torna mais leves e rápidos em comparação com máquinas virtuais tradicionais.
+
+Docker é amplamente utilizado para desenvolvimento, testes e implantação de aplicativos, promovendo a consistência e a eficiência no ciclo de vida do software.
+
+docker pull ubuntu Pega a imagem do ubuntu e inicia no container
+docker rm id_do_container serve para remover o container
+docker rmi id_da_imagem serve para remover a imagem
